@@ -1,0 +1,233 @@
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'add_code_pin_model.dart';
+export 'add_code_pin_model.dart';
+
+class AddCodePinWidget extends StatefulWidget {
+  const AddCodePinWidget({super.key});
+
+  @override
+  State<AddCodePinWidget> createState() => _AddCodePinWidgetState();
+}
+
+class _AddCodePinWidgetState extends State<AddCodePinWidget> {
+  late AddCodePinModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => AddCodePinModel());
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        body: Align(
+          alignment: AlignmentDirectional(0.0, 0.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: double.infinity,
+                constraints: BoxConstraints(
+                  maxWidth: 570.0,
+                ),
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (responsiveVisibility(
+                        context: context,
+                        phone: false,
+                        tablet: false,
+                      ))
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 44.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flexible(
+                                child: Align(
+                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  child: Text(
+                                    FFLocalizations.of(context).getText(
+                                      'xev2y9hn' /* إضافة رمز المرور */,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .headlineSmall
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .headlineSmallFamily,
+                                          fontSize: 25.0,
+                                          letterSpacing: 0.0,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineSmallFamily),
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 8.0, 16.0, 0.0),
+                        child: Text(
+                          FFLocalizations.of(context).getText(
+                            'w1jrqone' /* يجب عليك إضافة رمز جديد لجعل ت... */,
+                          ),
+                          textAlign: TextAlign.start,
+                          style: FlutterFlowTheme.of(context)
+                              .bodySmall
+                              .override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .bodySmallFamily,
+                                color: FlutterFlowTheme.of(context).tertiary,
+                                fontSize: 16.0,
+                                letterSpacing: 0.0,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .bodySmallFamily),
+                              ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 24.0, 16.0, 0.0),
+                        child: PinCodeTextField(
+                          autoDisposeControllers: false,
+                          appContext: context,
+                          length: 4,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .titleSmallFamily,
+                                color: FlutterFlowTheme.of(context).primary,
+                                letterSpacing: 0.0,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .titleSmallFamily),
+                              ),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          enableActiveFill: false,
+                          autoFocus: true,
+                          enablePinAutofill: true,
+                          errorTextSpace: 16.0,
+                          showCursor: true,
+                          cursorColor: FlutterFlowTheme.of(context).primary,
+                          obscureText: false,
+                          hintCharacter: '*',
+                          keyboardType: TextInputType.number,
+                          pinTheme: PinTheme(
+                            fieldHeight: 50.0,
+                            fieldWidth: 50.0,
+                            borderWidth: 2.0,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(60.0),
+                              bottomRight: Radius.circular(60.0),
+                              topLeft: Radius.circular(60.0),
+                              topRight: Radius.circular(60.0),
+                            ),
+                            shape: PinCodeFieldShape.box,
+                            activeColor: FlutterFlowTheme.of(context).tertiary,
+                            inactiveColor: FlutterFlowTheme.of(context).primary,
+                            selectedColor: Color(0xFF36444F),
+                            activeFillColor:
+                                FlutterFlowTheme.of(context).tertiary,
+                            inactiveFillColor:
+                                FlutterFlowTheme.of(context).primary,
+                            selectedFillColor: Color(0xFF36444F),
+                          ),
+                          controller: _model.pinCodeController,
+                          onChanged: (_) {},
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: _model.pinCodeControllerValidator
+                              .asValidator(context),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 24.0, 0.0, 44.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            context.pushNamed(
+                              'ConfirmCodePin',
+                              queryParameters: {
+                                'codePin': serializeParam(
+                                  _model.pinCodeController!.text,
+                                  ParamType.String,
+                                ),
+                              }.withoutNulls,
+                            );
+                          },
+                          text: FFLocalizations.of(context).getText(
+                            'lrko8hon' /* التالي */,
+                          ),
+                          options: FFButtonOptions(
+                            width: 270.0,
+                            height: 50.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .titleSmallFamily,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  letterSpacing: 0.0,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .titleSmallFamily),
+                                ),
+                            elevation: 2.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(60.0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "619979007546",
+    "project_id": "association-el-wafa-wlz4l5",
+    "storage_bucket": "association-el-wafa-wlz4l5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619979007546:android:15ae3a6207f04cea237703",
+        "android_client_info": {
+          "package_name": "com.mycompany.dashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKKdp-Bhd09qoW5aVECBOSrJrCCwB9gaY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
