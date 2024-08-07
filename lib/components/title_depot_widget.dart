@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'title_depot_model.dart';
 export 'title_depot_model.dart';
 
@@ -157,16 +158,18 @@ class _TitleDepotWidgetState extends State<TitleDepotWidget> {
                           await showDialog(
                             context: context,
                             builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('تهانينا'),
-                                content: Text('تمت إضافة عنوان جديد  بنجاح '),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('تم'),
-                                  ),
-                                ],
+                              return WebViewAware(
+                                child: AlertDialog(
+                                  title: Text('تهانينا'),
+                                  content: Text('تمت إضافة عنوان جديد  بنجاح '),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('تم'),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );
@@ -393,12 +396,14 @@ class _TitleDepotWidgetState extends State<TitleDepotWidget> {
                                       enableDrag: false,
                                       context: context,
                                       builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: AddDepotWidget(
-                                            title: listViewPortDepotRecord
-                                                .reference,
+                                        return WebViewAware(
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: AddDepotWidget(
+                                              title: listViewPortDepotRecord
+                                                  .reference,
+                                            ),
                                           ),
                                         );
                                       },

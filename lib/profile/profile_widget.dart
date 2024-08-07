@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'profile_model.dart';
 export 'profile_model.dart';
 
@@ -896,21 +897,24 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                           context,
                                                                       builder:
                                                                           (alertDialogContext) {
-                                                                        return AlertDialog(
-                                                                          title:
-                                                                              Text('هل أنت متأكد ؟ '),
-                                                                          content:
-                                                                              Text(' هل تريد تسجيل الخروج ؟'),
-                                                                          actions: [
-                                                                            TextButton(
-                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                              child: Text('لا'),
-                                                                            ),
-                                                                            TextButton(
-                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                              child: Text('تسجيل خروج'),
-                                                                            ),
-                                                                          ],
+                                                                        return WebViewAware(
+                                                                          child:
+                                                                              AlertDialog(
+                                                                            title:
+                                                                                Text('هل أنت متأكد ؟ '),
+                                                                            content:
+                                                                                Text(' هل تريد تسجيل الخروج ؟'),
+                                                                            actions: [
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                child: Text('لا'),
+                                                                              ),
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                child: Text('تسجيل خروج'),
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                         );
                                                                       },
                                                                     ) ??
@@ -1821,19 +1825,21 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                                     var confirmDialogResponse = await showDialog<bool>(
                                                                                           context: context,
                                                                                           builder: (alertDialogContext) {
-                                                                                            return AlertDialog(
-                                                                                              title: Text('هل أنت متأكد؟ '),
-                                                                                              content: Text('هل تريد حذف هذا المستخدم؟'),
-                                                                                              actions: [
-                                                                                                TextButton(
-                                                                                                  onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                  child: Text('لا'),
-                                                                                                ),
-                                                                                                TextButton(
-                                                                                                  onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                  child: Text('بالتأكيد'),
-                                                                                                ),
-                                                                                              ],
+                                                                                            return WebViewAware(
+                                                                                              child: AlertDialog(
+                                                                                                title: Text('هل أنت متأكد؟ '),
+                                                                                                content: Text('هل تريد حذف هذا المستخدم؟'),
+                                                                                                actions: [
+                                                                                                  TextButton(
+                                                                                                    onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                    child: Text('لا'),
+                                                                                                  ),
+                                                                                                  TextButton(
+                                                                                                    onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                    child: Text('بالتأكيد'),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
                                                                                             );
                                                                                           },
                                                                                         ) ??
@@ -1859,19 +1865,21 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                                     var confirmDialogResponse = await showDialog<bool>(
                                                                                           context: context,
                                                                                           builder: (alertDialogContext) {
-                                                                                            return AlertDialog(
-                                                                                              title: Text('هل أنت متأكد ؟ '),
-                                                                                              content: Text('هل تريد تغيير دور المستخدم هذا؟'),
-                                                                                              actions: [
-                                                                                                TextButton(
-                                                                                                  onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                  child: Text('لا'),
-                                                                                                ),
-                                                                                                TextButton(
-                                                                                                  onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                  child: Text('بالتأكيد'),
-                                                                                                ),
-                                                                                              ],
+                                                                                            return WebViewAware(
+                                                                                              child: AlertDialog(
+                                                                                                title: Text('هل أنت متأكد ؟ '),
+                                                                                                content: Text('هل تريد تغيير دور المستخدم هذا؟'),
+                                                                                                actions: [
+                                                                                                  TextButton(
+                                                                                                    onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                    child: Text('لا'),
+                                                                                                  ),
+                                                                                                  TextButton(
+                                                                                                    onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                    child: Text('بالتأكيد'),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
                                                                                             );
                                                                                           },
                                                                                         ) ??

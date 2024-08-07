@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'title_withdrawal_model.dart';
 export 'title_withdrawal_model.dart';
 
@@ -157,16 +158,18 @@ class _TitleWithdrawalWidgetState extends State<TitleWithdrawalWidget> {
                           await showDialog(
                             context: context,
                             builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('تهانينا'),
-                                content: Text('تمت إضافة عنوان جديد  بنجاح '),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('تم'),
-                                  ),
-                                ],
+                              return WebViewAware(
+                                child: AlertDialog(
+                                  title: Text('تهانينا'),
+                                  content: Text('تمت إضافة عنوان جديد  بنجاح '),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('تم'),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );
@@ -393,12 +396,15 @@ class _TitleWithdrawalWidgetState extends State<TitleWithdrawalWidget> {
                                       enableDrag: false,
                                       context: context,
                                       builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: AddWithdrawalWidget(
-                                            title: listViewPortWithdrawalRecord
-                                                .reference,
+                                        return WebViewAware(
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: AddWithdrawalWidget(
+                                              title:
+                                                  listViewPortWithdrawalRecord
+                                                      .reference,
+                                            ),
                                           ),
                                         );
                                       },

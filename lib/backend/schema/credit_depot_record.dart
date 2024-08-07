@@ -41,12 +41,18 @@ class CreditDepotRecord extends FirestoreRecord {
   String get year => _year ?? '';
   bool hasYear() => _year != null;
 
+  // "file" field.
+  String? _file;
+  String get file => _file ?? '';
+  bool hasFile() => _file != null;
+
   void _initializeFields() {
     _id = castToType<int>(snapshotData['id']);
     _date = snapshotData['date'] as String?;
     _montantDepot = castToType<double>(snapshotData['montantDepot']);
     _mois = snapshotData['mois'] as String?;
     _year = snapshotData['year'] as String?;
+    _file = snapshotData['file'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -89,6 +95,7 @@ Map<String, dynamic> createCreditDepotRecordData({
   double? montantDepot,
   String? mois,
   String? year,
+  String? file,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -97,6 +104,7 @@ Map<String, dynamic> createCreditDepotRecordData({
       'montantDepot': montantDepot,
       'mois': mois,
       'year': year,
+      'file': file,
     }.withoutNulls,
   );
 
@@ -112,12 +120,13 @@ class CreditDepotRecordDocumentEquality implements Equality<CreditDepotRecord> {
         e1?.date == e2?.date &&
         e1?.montantDepot == e2?.montantDepot &&
         e1?.mois == e2?.mois &&
-        e1?.year == e2?.year;
+        e1?.year == e2?.year &&
+        e1?.file == e2?.file;
   }
 
   @override
   int hash(CreditDepotRecord? e) => const ListEquality()
-      .hash([e?.id, e?.date, e?.montantDepot, e?.mois, e?.year]);
+      .hash([e?.id, e?.date, e?.montantDepot, e?.mois, e?.year, e?.file]);
 
   @override
   bool isValidKey(Object? o) => o is CreditDepotRecord;

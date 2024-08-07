@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'forgot_password_model.dart';
 export 'forgot_password_model.dart';
 
@@ -273,17 +274,19 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                           await showDialog(
                             context: context,
                             builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('تم إرسال الرابط'),
-                                content: Text(
-                                    'يمكنك إعادة تعيين كلمة المرور عن طريق الرابط'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('تم'),
-                                  ),
-                                ],
+                              return WebViewAware(
+                                child: AlertDialog(
+                                  title: Text('تم إرسال الرابط'),
+                                  content: Text(
+                                      'يمكنك إعادة تعيين كلمة المرور عن طريق الرابط'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('تم'),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );

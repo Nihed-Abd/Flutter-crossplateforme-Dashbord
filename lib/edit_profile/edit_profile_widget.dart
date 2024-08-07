@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'edit_profile_model.dart';
 export 'edit_profile_model.dart';
 
@@ -449,17 +450,19 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('تحديث الملف الشخصي'),
-                                    content:
-                                        Text('تم تحديث الملف الشخصي بنجاح'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('تم'),
-                                      ),
-                                    ],
+                                  return WebViewAware(
+                                    child: AlertDialog(
+                                      title: Text('تحديث الملف الشخصي'),
+                                      content:
+                                          Text('تم تحديث الملف الشخصي بنجاح'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('تم'),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               );

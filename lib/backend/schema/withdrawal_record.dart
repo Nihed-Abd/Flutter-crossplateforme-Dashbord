@@ -46,6 +46,16 @@ class WithdrawalRecord extends FirestoreRecord {
   DocumentReference? get titre => _titre;
   bool hasTitre() => _titre != null;
 
+  // "titreString" field.
+  String? _titreString;
+  String get titreString => _titreString ?? '';
+  bool hasTitreString() => _titreString != null;
+
+  // "file" field.
+  String? _file;
+  String get file => _file ?? '';
+  bool hasFile() => _file != null;
+
   void _initializeFields() {
     _montant = castToType<double>(snapshotData['montant']);
     _mois = snapshotData['mois'] as String?;
@@ -53,6 +63,8 @@ class WithdrawalRecord extends FirestoreRecord {
     _remarque = snapshotData['remarque'] as String?;
     _year = snapshotData['year'] as String?;
     _titre = snapshotData['titre'] as DocumentReference?;
+    _titreString = snapshotData['titreString'] as String?;
+    _file = snapshotData['file'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -96,6 +108,8 @@ Map<String, dynamic> createWithdrawalRecordData({
   String? remarque,
   String? year,
   DocumentReference? titre,
+  String? titreString,
+  String? file,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -105,6 +119,8 @@ Map<String, dynamic> createWithdrawalRecordData({
       'remarque': remarque,
       'year': year,
       'titre': titre,
+      'titreString': titreString,
+      'file': file,
     }.withoutNulls,
   );
 
@@ -121,12 +137,22 @@ class WithdrawalRecordDocumentEquality implements Equality<WithdrawalRecord> {
         e1?.date == e2?.date &&
         e1?.remarque == e2?.remarque &&
         e1?.year == e2?.year &&
-        e1?.titre == e2?.titre;
+        e1?.titre == e2?.titre &&
+        e1?.titreString == e2?.titreString &&
+        e1?.file == e2?.file;
   }
 
   @override
-  int hash(WithdrawalRecord? e) => const ListEquality()
-      .hash([e?.montant, e?.mois, e?.date, e?.remarque, e?.year, e?.titre]);
+  int hash(WithdrawalRecord? e) => const ListEquality().hash([
+        e?.montant,
+        e?.mois,
+        e?.date,
+        e?.remarque,
+        e?.year,
+        e?.titre,
+        e?.titreString,
+        e?.file
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is WithdrawalRecord;

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'clients_model.dart';
 export 'clients_model.dart';
 
@@ -1020,19 +1021,21 @@ class _ClientsWidgetState extends State<ClientsWidget> {
                                                                                   var confirmDialogResponse = await showDialog<bool>(
                                                                                         context: context,
                                                                                         builder: (alertDialogContext) {
-                                                                                          return AlertDialog(
-                                                                                            title: Text('هل أنت متأكد ؟ '),
-                                                                                            content: Text('هل تريد حذف هذا العميل؟'),
-                                                                                            actions: [
-                                                                                              TextButton(
-                                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                child: Text('لا'),
-                                                                                              ),
-                                                                                              TextButton(
-                                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                child: Text('بالتأكيد'),
-                                                                                              ),
-                                                                                            ],
+                                                                                          return WebViewAware(
+                                                                                            child: AlertDialog(
+                                                                                              title: Text('هل أنت متأكد ؟ '),
+                                                                                              content: Text('هل تريد حذف هذا العميل؟'),
+                                                                                              actions: [
+                                                                                                TextButton(
+                                                                                                  onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                  child: Text('لا'),
+                                                                                                ),
+                                                                                                TextButton(
+                                                                                                  onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                  child: Text('بالتأكيد'),
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
                                                                                           );
                                                                                         },
                                                                                       ) ??

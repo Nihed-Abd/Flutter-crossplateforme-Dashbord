@@ -56,6 +56,11 @@ class BankTransfertRecord extends FirestoreRecord {
   int get numFile => _numFile ?? 0;
   bool hasNumFile() => _numFile != null;
 
+  // "file" field.
+  String? _file;
+  String get file => _file ?? '';
+  bool hasFile() => _file != null;
+
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _montantPaye = castToType<double>(snapshotData['montantPaye']);
@@ -65,6 +70,7 @@ class BankTransfertRecord extends FirestoreRecord {
     _year = snapshotData['year'] as String?;
     _date = snapshotData['date'] as String?;
     _numFile = castToType<int>(snapshotData['numFile']);
+    _file = snapshotData['file'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -110,6 +116,7 @@ Map<String, dynamic> createBankTransfertRecordData({
   String? year,
   String? date,
   int? numFile,
+  String? file,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -121,6 +128,7 @@ Map<String, dynamic> createBankTransfertRecordData({
       'year': year,
       'date': date,
       'numFile': numFile,
+      'file': file,
     }.withoutNulls,
   );
 
@@ -140,7 +148,8 @@ class BankTransfertRecordDocumentEquality
         e1?.mois == e2?.mois &&
         e1?.year == e2?.year &&
         e1?.date == e2?.date &&
-        e1?.numFile == e2?.numFile;
+        e1?.numFile == e2?.numFile &&
+        e1?.file == e2?.file;
   }
 
   @override
@@ -152,7 +161,8 @@ class BankTransfertRecordDocumentEquality
         e?.mois,
         e?.year,
         e?.date,
-        e?.numFile
+        e?.numFile,
+        e?.file
       ]);
 
   @override

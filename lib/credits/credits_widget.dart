@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/add_credit_widget.dart';
+import '/components/add_file_credit_widget.dart';
 import '/components/side_bar_nav_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'credits_model.dart';
 export 'credits_model.dart';
 
@@ -539,18 +541,20 @@ class _CreditsWidgetState extends State<CreditsWidget>
                                                   context: context,
                                                   builder:
                                                       (alertDialogContext) {
-                                                    return AlertDialog(
-                                                      title: Text('خطأ'),
-                                                      content: Text(
-                                                          'يجب عليك اختيار شهر'),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  alertDialogContext),
-                                                          child: Text('تم'),
-                                                        ),
-                                                      ],
+                                                    return WebViewAware(
+                                                      child: AlertDialog(
+                                                        title: Text('خطأ'),
+                                                        content: Text(
+                                                            'يجب عليك اختيار شهر'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: Text('تم'),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     );
                                                   },
                                                 );
@@ -562,18 +566,20 @@ class _CreditsWidgetState extends State<CreditsWidget>
                                                   context: context,
                                                   builder:
                                                       (alertDialogContext) {
-                                                    return AlertDialog(
-                                                      title: Text('خطأ'),
-                                                      content: Text(
-                                                          'يجب عليك اختيار سنة'),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  alertDialogContext),
-                                                          child: Text('تم'),
-                                                        ),
-                                                      ],
+                                                    return WebViewAware(
+                                                      child: AlertDialog(
+                                                        title: Text('خطأ'),
+                                                        content: Text(
+                                                            'يجب عليك اختيار سنة'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: Text('تم'),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     );
                                                   },
                                                 );
@@ -874,18 +880,20 @@ class _CreditsWidgetState extends State<CreditsWidget>
                                                   context: context,
                                                   builder:
                                                       (alertDialogContext) {
-                                                    return AlertDialog(
-                                                      title: Text('خطأ'),
-                                                      content: Text(
-                                                          'يجب عليك اختيار سنة'),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  alertDialogContext),
-                                                          child: Text('تم'),
-                                                        ),
-                                                      ],
+                                                    return WebViewAware(
+                                                      child: AlertDialog(
+                                                        title: Text('خطأ'),
+                                                        content: Text(
+                                                            'يجب عليك اختيار سنة'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: Text('تم'),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     );
                                                   },
                                                 );
@@ -1066,17 +1074,21 @@ class _CreditsWidgetState extends State<CreditsWidget>
                                                             enableDrag: false,
                                                             context: context,
                                                             builder: (context) {
-                                                              return GestureDetector(
-                                                                onTap: () =>
-                                                                    FocusScope.of(
-                                                                            context)
-                                                                        .unfocus(),
-                                                                child: Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
+                                                              return WebViewAware(
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
                                                                   child:
-                                                                      AddCreditWidget(),
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        AddCreditWidget(),
+                                                                  ),
                                                                 ),
                                                               );
                                                             },
@@ -1438,7 +1450,7 @@ class _CreditsWidgetState extends State<CreditsWidget>
                                                                           8.0),
                                                               child: Container(
                                                                 width: 100.0,
-                                                                height: 143.0,
+                                                                height: 180.0,
                                                                 decoration:
                                                                     BoxDecoration(
                                                                   color: FlutterFlowTheme.of(
@@ -1626,61 +1638,144 @@ class _CreditsWidgetState extends State<CreditsWidget>
                                                                                   ],
                                                                                 ),
                                                                               ),
+                                                                              Align(
+                                                                                alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                  child: Row(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    children: [
+                                                                                      if (listViewCreditDepotRecord.file == null || listViewCreditDepotRecord.file == '')
+                                                                                        FFButtonWidget(
+                                                                                          onPressed: () async {
+                                                                                            await showModalBottomSheet(
+                                                                                              isScrollControlled: true,
+                                                                                              backgroundColor: Colors.transparent,
+                                                                                              enableDrag: false,
+                                                                                              context: context,
+                                                                                              builder: (context) {
+                                                                                                return WebViewAware(
+                                                                                                  child: GestureDetector(
+                                                                                                    onTap: () => FocusScope.of(context).unfocus(),
+                                                                                                    child: Padding(
+                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                      child: AddFileCreditWidget(
+                                                                                                        depot: listViewCreditDepotRecord.reference,
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                );
+                                                                                              },
+                                                                                            ).then((value) => safeSetState(() {}));
+                                                                                          },
+                                                                                          text: FFLocalizations.of(context).getText(
+                                                                                            'js6ntpim' /* اضافة الوثيقة */,
+                                                                                          ),
+                                                                                          icon: FaIcon(
+                                                                                            FontAwesomeIcons.fileUpload,
+                                                                                            size: 15.0,
+                                                                                          ),
+                                                                                          options: FFButtonOptions(
+                                                                                            height: 40.0,
+                                                                                            padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                                                                                            iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                            color: FlutterFlowTheme.of(context).primary,
+                                                                                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                                  fontFamily: FlutterFlowTheme.of(context).titleSmallFamily,
+                                                                                                  color: Colors.white,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                                                ),
+                                                                                            elevation: 3.0,
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Colors.transparent,
+                                                                                              width: 1.0,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(8.0),
+                                                                                          ),
+                                                                                        ),
+                                                                                      if (listViewCreditDepotRecord.file != null && listViewCreditDepotRecord.file != '')
+                                                                                        FFButtonWidget(
+                                                                                          onPressed: () async {
+                                                                                            await launchURL(listViewCreditDepotRecord.file);
+                                                                                          },
+                                                                                          text: FFLocalizations.of(context).getText(
+                                                                                            'vq2oj1l6' /*  الوثيقة */,
+                                                                                          ),
+                                                                                          icon: FaIcon(
+                                                                                            FontAwesomeIcons.fileAlt,
+                                                                                            size: 15.0,
+                                                                                          ),
+                                                                                          options: FFButtonOptions(
+                                                                                            height: 40.0,
+                                                                                            padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                                                                                            iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                            color: FlutterFlowTheme.of(context).primary,
+                                                                                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                                  fontFamily: FlutterFlowTheme.of(context).titleSmallFamily,
+                                                                                                  color: Colors.white,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                                                ),
+                                                                                            elevation: 3.0,
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Colors.transparent,
+                                                                                              width: 1.0,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(8.0),
+                                                                                          ),
+                                                                                        ),
+                                                                                      if (valueOrDefault(currentUserDocument?.role, '') == 'admin')
+                                                                                        AuthUserStreamWidget(
+                                                                                          builder: (context) => InkWell(
+                                                                                            splashColor: Colors.transparent,
+                                                                                            focusColor: Colors.transparent,
+                                                                                            hoverColor: Colors.transparent,
+                                                                                            highlightColor: Colors.transparent,
+                                                                                            onTap: () async {
+                                                                                              var confirmDialogResponse = await showDialog<bool>(
+                                                                                                    context: context,
+                                                                                                    builder: (alertDialogContext) {
+                                                                                                      return WebViewAware(
+                                                                                                        child: AlertDialog(
+                                                                                                          title: Text('هل أنت متأكد ؟ '),
+                                                                                                          content: Text('هل تريد حذف هذا المبلغ المودع ؟'),
+                                                                                                          actions: [
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                              child: Text('لا'),
+                                                                                                            ),
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                              child: Text('بالتأكيد'),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      );
+                                                                                                    },
+                                                                                                  ) ??
+                                                                                                  false;
+                                                                                              if (confirmDialogResponse) {
+                                                                                                await listViewCreditDepotRecord.reference.delete();
+                                                                                              } else {
+                                                                                                return;
+                                                                                              }
+                                                                                            },
+                                                                                            child: Icon(
+                                                                                              Icons.restore_from_trash_rounded,
+                                                                                              color: Color(0xFFFF0000),
+                                                                                              size: 40.0,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                    ].divide(SizedBox(width: 20.0)),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
                                                                             ],
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                      if (valueOrDefault(
-                                                                              currentUserDocument?.role,
-                                                                              '') ==
-                                                                          'admin')
-                                                                        AuthUserStreamWidget(
-                                                                          builder: (context) =>
-                                                                              InkWell(
-                                                                            splashColor:
-                                                                                Colors.transparent,
-                                                                            focusColor:
-                                                                                Colors.transparent,
-                                                                            hoverColor:
-                                                                                Colors.transparent,
-                                                                            highlightColor:
-                                                                                Colors.transparent,
-                                                                            onTap:
-                                                                                () async {
-                                                                              var confirmDialogResponse = await showDialog<bool>(
-                                                                                    context: context,
-                                                                                    builder: (alertDialogContext) {
-                                                                                      return AlertDialog(
-                                                                                        title: Text('هل أنت متأكد ؟ '),
-                                                                                        content: Text('هل تريد حذف هذا المبلغ المودع ؟'),
-                                                                                        actions: [
-                                                                                          TextButton(
-                                                                                            onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                            child: Text('لا'),
-                                                                                          ),
-                                                                                          TextButton(
-                                                                                            onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                            child: Text('بالتأكيد'),
-                                                                                          ),
-                                                                                        ],
-                                                                                      );
-                                                                                    },
-                                                                                  ) ??
-                                                                                  false;
-                                                                              if (confirmDialogResponse) {
-                                                                                await listViewCreditDepotRecord.reference.delete();
-                                                                              } else {
-                                                                                return;
-                                                                              }
-                                                                            },
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.restore_from_trash_rounded,
-                                                                              color: Color(0xFFFF0000),
-                                                                              size: 40.0,
-                                                                            ),
-                                                                          ),
-                                                                        ),
                                                                     ],
                                                                   ),
                                                                 ),

@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'add_bank_transfert_model.dart';
 export 'add_bank_transfert_model.dart';
 
@@ -157,17 +158,19 @@ class _AddBankTransfertWidgetState extends State<AddBankTransfertWidget> {
                           await showDialog(
                             context: context,
                             builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('تهانينا'),
-                                content: Text(
-                                    'تمت إضافة عنوان جديد للتحويلات البنكية بنجاح '),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('تم'),
-                                  ),
-                                ],
+                              return WebViewAware(
+                                child: AlertDialog(
+                                  title: Text('تهانينا'),
+                                  content: Text(
+                                      'تمت إضافة عنوان جديد للتحويلات البنكية بنجاح '),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('تم'),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );
@@ -396,13 +399,15 @@ class _AddBankTransfertWidgetState extends State<AddBankTransfertWidget> {
                                       enableDrag: false,
                                       context: context,
                                       builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: AddBankTransfertStep2Widget(
-                                            title:
-                                                listViewTransfertBankTitlesRecord
-                                                    .title,
+                                        return WebViewAware(
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: AddBankTransfertStep2Widget(
+                                              title:
+                                                  listViewTransfertBankTitlesRecord
+                                                      .title,
+                                            ),
                                           ),
                                         );
                                       },

@@ -5,6 +5,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'confirm_code_pin_model.dart';
 export 'confirm_code_pin_model.dart';
 
@@ -166,16 +167,19 @@ class _ConfirmCodePinWidgetState extends State<ConfirmCodePinWidget> {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('تم تأكيد رمز المرور'),
-                                    content: Text('تمت إضافة رمز المرور بنجاح'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('تم'),
-                                      ),
-                                    ],
+                                  return WebViewAware(
+                                    child: AlertDialog(
+                                      title: Text('تم تأكيد رمز المرور'),
+                                      content:
+                                          Text('تمت إضافة رمز المرور بنجاح'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('تم'),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               );
@@ -185,17 +189,19 @@ class _ConfirmCodePinWidgetState extends State<ConfirmCodePinWidget> {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('رمز المرور غير متطابق'),
-                                    content:
-                                        Text(' يرجى إعادة ملء الرمز السري'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('تم'),
-                                      ),
-                                    ],
+                                  return WebViewAware(
+                                    child: AlertDialog(
+                                      title: Text('رمز المرور غير متطابق'),
+                                      content:
+                                          Text(' يرجى إعادة ملء الرمز السري'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('تم'),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               );

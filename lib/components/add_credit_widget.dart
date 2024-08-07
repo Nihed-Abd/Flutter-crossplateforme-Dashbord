@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'add_credit_model.dart';
 export 'add_credit_model.dart';
 
@@ -647,16 +648,18 @@ class _AddCreditWidgetState extends State<AddCreditWidget> {
                           await showDialog(
                             context: context,
                             builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('تهانينا'),
-                                content: Text('تمت إضافة المصاريف بنجاح '),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('تم'),
-                                  ),
-                                ],
+                              return WebViewAware(
+                                child: AlertDialog(
+                                  title: Text('تهانينا'),
+                                  content: Text('تمت إضافة المصاريف بنجاح '),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('تم'),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );

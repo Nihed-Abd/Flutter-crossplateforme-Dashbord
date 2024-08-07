@@ -6,6 +6,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'code_pin_model.dart';
 export 'code_pin_model.dart';
 
@@ -163,16 +164,18 @@ class _CodePinWidgetState extends State<CodePinWidget> {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('تمت تأكيد رمز المرور بنجاح'),
-                                    content: Text('يمكنك تسجيل الدخول بنجاح'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('تم'),
-                                      ),
-                                    ],
+                                  return WebViewAware(
+                                    child: AlertDialog(
+                                      title: Text('تمت تأكيد رمز المرور بنجاح'),
+                                      content: Text('يمكنك تسجيل الدخول بنجاح'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('تم'),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               );
@@ -182,17 +185,19 @@ class _CodePinWidgetState extends State<CodePinWidget> {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('رمز المرور غير متطابق'),
-                                    content:
-                                        Text(' يرجى إعادة ملء الرمز السري'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('تم'),
-                                      ),
-                                    ],
+                                  return WebViewAware(
+                                    child: AlertDialog(
+                                      title: Text('رمز المرور غير متطابق'),
+                                      content:
+                                          Text(' يرجى إعادة ملء الرمز السري'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('تم'),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               );

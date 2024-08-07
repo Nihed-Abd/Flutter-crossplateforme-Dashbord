@@ -1,5 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/add_file_depot_widget.dart';
+import '/components/add_file_withdrawal_widget.dart';
 import '/components/side_bar_nav_widget.dart';
 import '/components/title_depot_widget.dart';
 import '/components/title_withdrawal_widget.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'depot_withdrawal_model.dart';
 export 'depot_withdrawal_model.dart';
 
@@ -335,17 +338,19 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                                     context,
                                                                 builder:
                                                                     (context) {
-                                                                  return GestureDetector(
-                                                                    onTap: () =>
-                                                                        FocusScope.of(context)
-                                                                            .unfocus(),
+                                                                  return WebViewAware(
                                                                     child:
-                                                                        Padding(
-                                                                      padding: MediaQuery
-                                                                          .viewInsetsOf(
-                                                                              context),
+                                                                        GestureDetector(
+                                                                      onTap: () =>
+                                                                          FocusScope.of(context)
+                                                                              .unfocus(),
                                                                       child:
-                                                                          TitleDepotWidget(),
+                                                                          Padding(
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
+                                                                        child:
+                                                                            TitleDepotWidget(),
+                                                                      ),
                                                                     ),
                                                                   );
                                                                 },
@@ -644,7 +649,9 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                           0.0, 4.0, 0.0, 0.0),
                                                   child: StreamBuilder<
                                                       List<DepotRecord>>(
-                                                    stream: queryDepotRecord(),
+                                                    stream: queryDepotRecord(
+                                                      limit: 10,
+                                                    ),
                                                     builder:
                                                         (context, snapshot) {
                                                       // Customize what your widget looks like when it's loading.
@@ -694,7 +701,7 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                             child: Container(
                                                               width: double
                                                                   .infinity,
-                                                              height: 120.0,
+                                                              height: 165.0,
                                                               decoration:
                                                                   BoxDecoration(
                                                                 color: FlutterFlowTheme.of(
@@ -835,52 +842,6 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                  if (valueOrDefault(currentUserDocument?.role, '') == 'admin')
-                                                                                    Flexible(
-                                                                                      child: Align(
-                                                                                        alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                        child: AuthUserStreamWidget(
-                                                                                          builder: (context) => InkWell(
-                                                                                            splashColor: Colors.transparent,
-                                                                                            focusColor: Colors.transparent,
-                                                                                            hoverColor: Colors.transparent,
-                                                                                            highlightColor: Colors.transparent,
-                                                                                            onTap: () async {
-                                                                                              var confirmDialogResponse = await showDialog<bool>(
-                                                                                                    context: context,
-                                                                                                    builder: (alertDialogContext) {
-                                                                                                      return AlertDialog(
-                                                                                                        title: Text('هل أنت متأكد ؟ '),
-                                                                                                        content: Text('هل تريد حذف هذه الإضافة؟'),
-                                                                                                        actions: [
-                                                                                                          TextButton(
-                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                            child: Text('لا'),
-                                                                                                          ),
-                                                                                                          TextButton(
-                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                            child: Text('بالتأكيد'),
-                                                                                                          ),
-                                                                                                        ],
-                                                                                                      );
-                                                                                                    },
-                                                                                                  ) ??
-                                                                                                  false;
-                                                                                              if (confirmDialogResponse) {
-                                                                                                await listViewDepotRecord.reference.delete();
-                                                                                              } else {
-                                                                                                return;
-                                                                                              }
-                                                                                            },
-                                                                                            child: Icon(
-                                                                                              Icons.delete_forever,
-                                                                                              color: Color(0xFFFD0303),
-                                                                                              size: 35.0,
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
                                                                                   Flexible(
                                                                                     child: Align(
                                                                                       alignment: AlignmentDirectional(1.0, 0.0),
@@ -903,6 +864,149 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                                                     ),
                                                                                   ),
                                                                                 ],
+                                                                              ),
+                                                                            ),
+                                                                            Align(
+                                                                              alignment: AlignmentDirectional(0.0, 0.0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.min,
+                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                children: [
+                                                                                  if (listViewDepotRecord.file == null || listViewDepotRecord.file == '')
+                                                                                    Align(
+                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                      child: FFButtonWidget(
+                                                                                        onPressed: () async {
+                                                                                          await showModalBottomSheet(
+                                                                                            isScrollControlled: true,
+                                                                                            backgroundColor: Colors.transparent,
+                                                                                            enableDrag: false,
+                                                                                            context: context,
+                                                                                            builder: (context) {
+                                                                                              return WebViewAware(
+                                                                                                child: GestureDetector(
+                                                                                                  onTap: () => FocusScope.of(context).unfocus(),
+                                                                                                  child: Padding(
+                                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                                    child: AddFileDepotWidget(
+                                                                                                      depot: listViewDepotRecord.reference,
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ),
+                                                                                              );
+                                                                                            },
+                                                                                          ).then((value) => safeSetState(() {}));
+                                                                                        },
+                                                                                        text: FFLocalizations.of(context).getText(
+                                                                                          'itpe74ya' /* اضافة الوثيقة */,
+                                                                                        ),
+                                                                                        icon: FaIcon(
+                                                                                          FontAwesomeIcons.fileUpload,
+                                                                                          size: 15.0,
+                                                                                        ),
+                                                                                        options: FFButtonOptions(
+                                                                                          height: 40.0,
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                          color: FlutterFlowTheme.of(context).primary,
+                                                                                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                                fontFamily: FlutterFlowTheme.of(context).titleSmallFamily,
+                                                                                                color: Colors.white,
+                                                                                                letterSpacing: 0.0,
+                                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                                              ),
+                                                                                          elevation: 3.0,
+                                                                                          borderSide: BorderSide(
+                                                                                            color: Colors.transparent,
+                                                                                            width: 1.0,
+                                                                                          ),
+                                                                                          borderRadius: BorderRadius.circular(8.0),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  if (listViewDepotRecord.file != null && listViewDepotRecord.file != '')
+                                                                                    Align(
+                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                      child: FFButtonWidget(
+                                                                                        onPressed: () async {
+                                                                                          await launchURL(listViewDepotRecord.file);
+                                                                                        },
+                                                                                        text: FFLocalizations.of(context).getText(
+                                                                                          '6lp0yzmr' /*  الوثيقة */,
+                                                                                        ),
+                                                                                        icon: FaIcon(
+                                                                                          FontAwesomeIcons.fileAlt,
+                                                                                          size: 15.0,
+                                                                                        ),
+                                                                                        options: FFButtonOptions(
+                                                                                          height: 40.0,
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                          color: FlutterFlowTheme.of(context).primary,
+                                                                                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                                fontFamily: FlutterFlowTheme.of(context).titleSmallFamily,
+                                                                                                color: Colors.white,
+                                                                                                letterSpacing: 0.0,
+                                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                                              ),
+                                                                                          elevation: 3.0,
+                                                                                          borderSide: BorderSide(
+                                                                                            color: Colors.transparent,
+                                                                                            width: 1.0,
+                                                                                          ),
+                                                                                          borderRadius: BorderRadius.circular(8.0),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  if (valueOrDefault(currentUserDocument?.role, '') == 'admin')
+                                                                                    Flexible(
+                                                                                      child: Align(
+                                                                                        alignment: AlignmentDirectional(1.0, 0.0),
+                                                                                        child: AuthUserStreamWidget(
+                                                                                          builder: (context) => InkWell(
+                                                                                            splashColor: Colors.transparent,
+                                                                                            focusColor: Colors.transparent,
+                                                                                            hoverColor: Colors.transparent,
+                                                                                            highlightColor: Colors.transparent,
+                                                                                            onTap: () async {
+                                                                                              var confirmDialogResponse = await showDialog<bool>(
+                                                                                                    context: context,
+                                                                                                    builder: (alertDialogContext) {
+                                                                                                      return WebViewAware(
+                                                                                                        child: AlertDialog(
+                                                                                                          title: Text('هل أنت متأكد ؟ '),
+                                                                                                          content: Text('هل تريد حذف هذه الإضافة؟'),
+                                                                                                          actions: [
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                              child: Text('لا'),
+                                                                                                            ),
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                              child: Text('بالتأكيد'),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      );
+                                                                                                    },
+                                                                                                  ) ??
+                                                                                                  false;
+                                                                                              if (confirmDialogResponse) {
+                                                                                                await listViewDepotRecord.reference.delete();
+                                                                                              } else {
+                                                                                                return;
+                                                                                              }
+                                                                                            },
+                                                                                            child: Icon(
+                                                                                              Icons.delete_forever,
+                                                                                              color: Color(0xFFFD0303),
+                                                                                              size: 35.0,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                ].divide(SizedBox(width: 20.0)),
                                                                               ),
                                                                             ),
                                                                           ],
@@ -1024,17 +1128,21 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                             enableDrag: false,
                                                             context: context,
                                                             builder: (context) {
-                                                              return GestureDetector(
-                                                                onTap: () =>
-                                                                    FocusScope.of(
-                                                                            context)
-                                                                        .unfocus(),
-                                                                child: Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
+                                                              return WebViewAware(
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
                                                                   child:
-                                                                      TitleWithdrawalWidget(),
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        TitleWithdrawalWidget(),
+                                                                  ),
                                                                 ),
                                                               );
                                                             },
@@ -1363,7 +1471,7 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                                         1.0),
                                                             child: Container(
                                                               width: 100.0,
-                                                              height: 120.0,
+                                                              height: 165.0,
                                                               decoration:
                                                                   BoxDecoration(
                                                                 color: FlutterFlowTheme.of(
@@ -1500,52 +1608,6 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                  if (valueOrDefault(currentUserDocument?.role, '') == 'admin')
-                                                                                    Flexible(
-                                                                                      child: Align(
-                                                                                        alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                        child: AuthUserStreamWidget(
-                                                                                          builder: (context) => InkWell(
-                                                                                            splashColor: Colors.transparent,
-                                                                                            focusColor: Colors.transparent,
-                                                                                            hoverColor: Colors.transparent,
-                                                                                            highlightColor: Colors.transparent,
-                                                                                            onTap: () async {
-                                                                                              var confirmDialogResponse = await showDialog<bool>(
-                                                                                                    context: context,
-                                                                                                    builder: (alertDialogContext) {
-                                                                                                      return AlertDialog(
-                                                                                                        title: Text('هل أنت متأكد ؟ '),
-                                                                                                        content: Text('هل تريد حذف هذا الانسحاب؟'),
-                                                                                                        actions: [
-                                                                                                          TextButton(
-                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                            child: Text('لا'),
-                                                                                                          ),
-                                                                                                          TextButton(
-                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                            child: Text('بالتأكيد'),
-                                                                                                          ),
-                                                                                                        ],
-                                                                                                      );
-                                                                                                    },
-                                                                                                  ) ??
-                                                                                                  false;
-                                                                                              if (confirmDialogResponse) {
-                                                                                                await listViewWithdrawalRecord.reference.delete();
-                                                                                              } else {
-                                                                                                return;
-                                                                                              }
-                                                                                            },
-                                                                                            child: Icon(
-                                                                                              Icons.delete_forever,
-                                                                                              color: Color(0xFFFD0303),
-                                                                                              size: 35.0,
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
                                                                                   Flexible(
                                                                                     child: Align(
                                                                                       alignment: AlignmentDirectional(1.0, 0.0),
@@ -1568,6 +1630,148 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                                                     ),
                                                                                   ),
                                                                                 ],
+                                                                              ),
+                                                                            ),
+                                                                            Align(
+                                                                              alignment: AlignmentDirectional(0.0, 0.0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.min,
+                                                                                children: [
+                                                                                  if (listViewWithdrawalRecord.file == null || listViewWithdrawalRecord.file == '')
+                                                                                    Align(
+                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                      child: FFButtonWidget(
+                                                                                        onPressed: () async {
+                                                                                          await showModalBottomSheet(
+                                                                                            isScrollControlled: true,
+                                                                                            backgroundColor: Colors.transparent,
+                                                                                            enableDrag: false,
+                                                                                            context: context,
+                                                                                            builder: (context) {
+                                                                                              return WebViewAware(
+                                                                                                child: GestureDetector(
+                                                                                                  onTap: () => FocusScope.of(context).unfocus(),
+                                                                                                  child: Padding(
+                                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                                    child: AddFileWithdrawalWidget(
+                                                                                                      depot: listViewWithdrawalRecord.reference,
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ),
+                                                                                              );
+                                                                                            },
+                                                                                          ).then((value) => safeSetState(() {}));
+                                                                                        },
+                                                                                        text: FFLocalizations.of(context).getText(
+                                                                                          '5tspx2oq' /* اضافة الوثيقة */,
+                                                                                        ),
+                                                                                        icon: FaIcon(
+                                                                                          FontAwesomeIcons.fileUpload,
+                                                                                          size: 15.0,
+                                                                                        ),
+                                                                                        options: FFButtonOptions(
+                                                                                          height: 40.0,
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                          color: FlutterFlowTheme.of(context).primary,
+                                                                                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                                fontFamily: FlutterFlowTheme.of(context).titleSmallFamily,
+                                                                                                color: Colors.white,
+                                                                                                letterSpacing: 0.0,
+                                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                                              ),
+                                                                                          elevation: 3.0,
+                                                                                          borderSide: BorderSide(
+                                                                                            color: Colors.transparent,
+                                                                                            width: 1.0,
+                                                                                          ),
+                                                                                          borderRadius: BorderRadius.circular(8.0),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  if (listViewWithdrawalRecord.file != null && listViewWithdrawalRecord.file != '')
+                                                                                    Align(
+                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                      child: FFButtonWidget(
+                                                                                        onPressed: () async {
+                                                                                          await launchURL(listViewWithdrawalRecord.file);
+                                                                                        },
+                                                                                        text: FFLocalizations.of(context).getText(
+                                                                                          '0kg906sp' /*  الوثيقة */,
+                                                                                        ),
+                                                                                        icon: FaIcon(
+                                                                                          FontAwesomeIcons.fileAlt,
+                                                                                          size: 15.0,
+                                                                                        ),
+                                                                                        options: FFButtonOptions(
+                                                                                          height: 40.0,
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                          color: FlutterFlowTheme.of(context).primary,
+                                                                                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                                fontFamily: FlutterFlowTheme.of(context).titleSmallFamily,
+                                                                                                color: Colors.white,
+                                                                                                letterSpacing: 0.0,
+                                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                                              ),
+                                                                                          elevation: 3.0,
+                                                                                          borderSide: BorderSide(
+                                                                                            color: Colors.transparent,
+                                                                                            width: 1.0,
+                                                                                          ),
+                                                                                          borderRadius: BorderRadius.circular(8.0),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  if (valueOrDefault(currentUserDocument?.role, '') == 'admin')
+                                                                                    Flexible(
+                                                                                      child: Align(
+                                                                                        alignment: AlignmentDirectional(1.0, 0.0),
+                                                                                        child: AuthUserStreamWidget(
+                                                                                          builder: (context) => InkWell(
+                                                                                            splashColor: Colors.transparent,
+                                                                                            focusColor: Colors.transparent,
+                                                                                            hoverColor: Colors.transparent,
+                                                                                            highlightColor: Colors.transparent,
+                                                                                            onTap: () async {
+                                                                                              var confirmDialogResponse = await showDialog<bool>(
+                                                                                                    context: context,
+                                                                                                    builder: (alertDialogContext) {
+                                                                                                      return WebViewAware(
+                                                                                                        child: AlertDialog(
+                                                                                                          title: Text('هل أنت متأكد ؟ '),
+                                                                                                          content: Text('هل تريد حذف هذا الانسحاب؟'),
+                                                                                                          actions: [
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                              child: Text('لا'),
+                                                                                                            ),
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                              child: Text('بالتأكيد'),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      );
+                                                                                                    },
+                                                                                                  ) ??
+                                                                                                  false;
+                                                                                              if (confirmDialogResponse) {
+                                                                                                await listViewWithdrawalRecord.reference.delete();
+                                                                                              } else {
+                                                                                                return;
+                                                                                              }
+                                                                                            },
+                                                                                            child: Icon(
+                                                                                              Icons.delete_forever,
+                                                                                              color: Color(0xFFFD0303),
+                                                                                              size: 35.0,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                ].divide(SizedBox(width: 20.0)),
                                                                               ),
                                                                             ),
                                                                           ],
@@ -2333,18 +2537,21 @@ class _DepotWithdrawalWidgetState extends State<DepotWithdrawalWidget>
                                                       context: context,
                                                       builder:
                                                           (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: Text('خطأ'),
-                                                          content: Text(
-                                                              'يجب عليك اختيار سنة'),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext),
-                                                              child: Text('تم'),
-                                                            ),
-                                                          ],
+                                                        return WebViewAware(
+                                                          child: AlertDialog(
+                                                            title: Text('خطأ'),
+                                                            content: Text(
+                                                                'يجب عليك اختيار سنة'),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    Text('تم'),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         );
                                                       },
                                                     );

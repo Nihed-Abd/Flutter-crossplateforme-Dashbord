@@ -59,7 +59,6 @@ Future finance(
         depots?.map((e) => e.montant).reduce((a, b) => a + b) ?? 0;
     final withdrawalTotal =
         withdrawals?.map((e) => e.montant).reduce((a, b) => a + b) ?? 0;
-    final gain = depotTotal - withdrawalTotal;
 
     pdf.addPage(pw.Page(
       pageFormat: PdfPageFormat.a4,
@@ -100,7 +99,7 @@ Future finance(
               pw.Text('الحساب الشهري لشهر $month سنة $year',
                   style: pw.TextStyle(font: arabicFont, fontSize: 16)),
               pw.SizedBox(height: 20),
-              pw.Text('جدول الايداعات',
+              pw.Text('جدول الإيداعات',
                   style: pw.TextStyle(font: arabicFont, fontSize: 12)),
               pw.Table(
                 border: pw.TableBorder.all(),
@@ -127,32 +126,44 @@ Future finance(
                             textAlign: pw.TextAlign.center,
                             style: pw.TextStyle(font: arabicFont))),
                   ]),
-                  ...depots?.map((depot) {
-                        return pw.TableRow(children: [
-                          pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(
-                                  depot.date?.toDate().toString() ?? '',
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                          pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(depot.montant.toString(),
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                          pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(depot.remarque ?? '',
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                          pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(depot.titre ?? '',
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                        ]);
-                      })?.toList() ??
-                      [],
+                  ...?depots?.map((depot) {
+                    return pw.TableRow(children: [
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(depot.date?.toString() ?? '',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(depot.montant.toString(),
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(depot.remarque ?? '',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(depot.titreString ?? '',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                    ]);
+                  }).toList(),
+                  pw.TableRow(children: [
+                    pw.Padding(
+                        padding: pw.EdgeInsets.all(8),
+                        child: pw.Text('المجموع',
+                            textAlign: pw.TextAlign.center,
+                            style: pw.TextStyle(font: arabicFont))),
+                    pw.Padding(
+                        padding: pw.EdgeInsets.all(8),
+                        child: pw.Text(depotTotal.toString(),
+                            textAlign: pw.TextAlign.center,
+                            style: pw.TextStyle(font: arabicFont))),
+                    pw.Padding(padding: pw.EdgeInsets.all(8)),
+                    pw.Padding(padding: pw.EdgeInsets.all(8)),
+                  ]),
                 ],
               ),
               pw.SizedBox(height: 20),
@@ -183,40 +194,30 @@ Future finance(
                             textAlign: pw.TextAlign.center,
                             style: pw.TextStyle(font: arabicFont))),
                   ]),
-                  ...withdrawals?.map((withdrawal) {
-                        return pw.TableRow(children: [
-                          pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(
-                                  withdrawal.date?.toDate().toString() ?? '',
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                          pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(withdrawal.montant.toString(),
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                          pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(withdrawal.remarque ?? '',
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                          pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(withdrawal.titre ?? '',
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                        ]);
-                      })?.toList() ??
-                      [],
-                ],
-              ),
-              pw.SizedBox(height: 20),
-              pw.Text('المجموع',
-                  style: pw.TextStyle(font: arabicFont, fontSize: 12)),
-              pw.Table(
-                border: pw.TableBorder.all(),
-                children: [
+                  ...?withdrawals?.map((withdrawal) {
+                    return pw.TableRow(children: [
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(withdrawal.date?.toString() ?? '',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(withdrawal.montant.toString(),
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(withdrawal.remarque ?? '',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(withdrawal.titreString ?? '',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                    ]);
+                  }).toList(),
                   pw.TableRow(children: [
                     pw.Padding(
                         padding: pw.EdgeInsets.all(8),
@@ -225,19 +226,11 @@ Future finance(
                             style: pw.TextStyle(font: arabicFont))),
                     pw.Padding(
                         padding: pw.EdgeInsets.all(8),
-                        child: pw.Text(gain.toString(),
-                            textAlign: pw.TextAlign.center,
-                            style: pw.TextStyle(font: arabicFont))),
-                    pw.Padding(
-                        padding: pw.EdgeInsets.all(8),
                         child: pw.Text(withdrawalTotal.toString(),
                             textAlign: pw.TextAlign.center,
                             style: pw.TextStyle(font: arabicFont))),
-                    pw.Padding(
-                        padding: pw.EdgeInsets.all(8),
-                        child: pw.Text(depotTotal.toString(),
-                            textAlign: pw.TextAlign.center,
-                            style: pw.TextStyle(font: arabicFont))),
+                    pw.Padding(padding: pw.EdgeInsets.all(8)),
+                    pw.Padding(padding: pw.EdgeInsets.all(8)),
                   ]),
                 ],
               ),

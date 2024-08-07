@@ -576,6 +576,14 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': 'مجموع الودائع',
       'ar': '',
     },
+    'itpe74ya': {
+      'fr': 'اضافة الوثيقة',
+      'ar': '',
+    },
+    '6lp0yzmr': {
+      'fr': ' الوثيقة',
+      'ar': '',
+    },
     'f846zsii': {
       'fr': 'المصاريف',
       'ar': '',
@@ -594,6 +602,14 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'j0ghsdo9': {
       'fr': 'إجمالي المصاريف',
+      'ar': '',
+    },
+    '5tspx2oq': {
+      'fr': 'اضافة الوثيقة',
+      'ar': '',
+    },
+    '0kg906sp': {
+      'fr': ' الوثيقة',
       'ar': '',
     },
     'bl5gqnjl': {
@@ -1291,6 +1307,14 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': 'التاريخ',
       'ar': '',
     },
+    'js6ntpim': {
+      'fr': 'اضافة الوثيقة',
+      'ar': '',
+    },
+    'vq2oj1l6': {
+      'fr': ' الوثيقة',
+      'ar': '',
+    },
     '5swt0oad': {
       'fr': 'Task Type',
       'ar': '',
@@ -1529,6 +1553,14 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'vaqg7rtl': {
       'fr': 'Route progress',
+      'ar': '',
+    },
+    'ptmbcquk': {
+      'fr': 'اضافة الوثيقة',
+      'ar': '',
+    },
+    '89kkapbw': {
+      'fr': ' الوثيقة',
       'ar': '',
     },
     'v274rhs3': {
@@ -2929,6 +2961,97 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'jhujpwrt': {
       'fr': 'Active',
+      'ar': '',
+    },
+  },
+  // addFileDepot
+  {
+    'q41gyk0k': {
+      'fr': 'اضاقة الوثيقة',
+      'ar': '',
+    },
+    'c7t6m2xt': {
+      'fr': 'تحميل الوثيقة',
+      'ar': '',
+    },
+    '7uav9p0m': {
+      'fr': 'عودة',
+      'ar': '',
+    },
+    '3bg15cr9': {
+      'fr': 'اضافة',
+      'ar': '',
+    },
+  },
+  // seeFile
+  {
+    'jjvk0n8t': {
+      'fr': 'اضاقة الوثيقة',
+      'ar': '',
+    },
+    'k5zcu4dc': {
+      'fr': 'عودة',
+      'ar': '',
+    },
+    '72554240': {
+      'fr': 'طباعة الوثيقة',
+      'ar': '',
+    },
+  },
+  // addFileWithdrawal
+  {
+    '86vw7dtr': {
+      'fr': 'اضاقة الوثيقة',
+      'ar': '',
+    },
+    'qrnhcgpn': {
+      'fr': 'تحميل الوثيقة',
+      'ar': '',
+    },
+    'ij009wvr': {
+      'fr': 'عودة',
+      'ar': '',
+    },
+    '42f92cgs': {
+      'fr': 'اضافة',
+      'ar': '',
+    },
+  },
+  // addFileBankTrensfert
+  {
+    'hahar5rk': {
+      'fr': 'اضاقة الوثيقة',
+      'ar': '',
+    },
+    'q64lclix': {
+      'fr': 'تحميل الوثيقة',
+      'ar': '',
+    },
+    'm6vou27p': {
+      'fr': 'عودة',
+      'ar': '',
+    },
+    'stqb4zgg': {
+      'fr': 'اضافة',
+      'ar': '',
+    },
+  },
+  // addFileCredit
+  {
+    'lab4l39n': {
+      'fr': 'اضاقة الوثيقة',
+      'ar': '',
+    },
+    'o4lgrfv7': {
+      'fr': 'تحميل الوثيقة',
+      'ar': '',
+    },
+    'hf11y3oe': {
+      'fr': 'عودة',
+      'ar': '',
+    },
+    'hu260rsa': {
+      'fr': 'اضافة',
       'ar': '',
     },
   },

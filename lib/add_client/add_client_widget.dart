@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'add_client_model.dart';
 export 'add_client_model.dart';
 
@@ -892,18 +893,20 @@ class _AddClientWidgetState extends State<AddClientWidget> {
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
-                                              return AlertDialog(
-                                                title: Text('تهانينا'),
-                                                content: Text(
-                                                    'تمت إضافة عميل جديد '),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext),
-                                                    child: Text('تم'),
-                                                  ),
-                                                ],
+                                              return WebViewAware(
+                                                child: AlertDialog(
+                                                  title: Text('تهانينا'),
+                                                  content: Text(
+                                                      'تمت إضافة عميل جديد '),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('تم'),
+                                                    ),
+                                                  ],
+                                                ),
                                               );
                                             },
                                           );
