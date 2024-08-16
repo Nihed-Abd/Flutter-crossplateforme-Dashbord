@@ -471,6 +471,23 @@ class _TitleWithdrawalWidgetState extends State<TitleWithdrawalWidget> {
                                                 ),
                                               ),
                                             ),
+                                            InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                await listViewPortWithdrawalRecord
+                                                    .reference
+                                                    .delete();
+                                              },
+                                              child: Icon(
+                                                Icons.delete_forever,
+                                                color: Color(0xFFFF1900),
+                                                size: 40.0,
+                                              ),
+                                            ),
                                             Icon(
                                               Icons.arrow_forward_ios,
                                               color:

@@ -82,6 +82,7 @@ class _AddUserWidgetState extends State<AddUserWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 12.0, 20.0, 12.0),
                           child: SingleChildScrollView(
+                            primary: false,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
