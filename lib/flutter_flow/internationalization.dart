@@ -237,10 +237,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': 'تعديل',
       'ar': '',
     },
-    'cxma5nab': {
-      'fr': 'عودة',
-      'ar': '',
-    },
     'wn6zp1xp': {
       'fr': 'تعديل الملف الشخصي',
       'ar': '',
@@ -560,58 +556,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // DepotWithdrawal
   {
-    '2xx3xf7w': {
-      'fr': 'المداخيل',
-      'ar': '',
-    },
-    'cbivh4w6': {
-      'fr': 'اضافة مداخيل',
-      'ar': '',
-    },
-    'mfnc0guy': {
-      'fr': 'عدد تحويلات الودائع',
-      'ar': '',
-    },
-    'o5xue3m1': {
-      'fr': 'مجموع الودائع',
-      'ar': '',
-    },
-    'itpe74ya': {
-      'fr': 'اضافة الوثيقة',
-      'ar': '',
-    },
-    '6lp0yzmr': {
-      'fr': ' الوثيقة',
-      'ar': '',
-    },
-    'f846zsii': {
-      'fr': 'المصاريف',
-      'ar': '',
-    },
-    'zexh1ht4': {
-      'fr': 'اضافة مصاريف',
-      'ar': '',
-    },
-    '2vodlxer': {
-      'fr': 'عدد عمليات السحب',
-      'ar': '',
-    },
-    '5f035eml': {
-      'fr': '15/26',
-      'ar': '',
-    },
-    'j0ghsdo9': {
-      'fr': 'إجمالي المصاريف',
-      'ar': '',
-    },
-    '5tspx2oq': {
-      'fr': 'اضافة الوثيقة',
-      'ar': '',
-    },
-    '0kg906sp': {
-      'fr': ' الوثيقة',
-      'ar': '',
-    },
     'bl5gqnjl': {
       'fr': 'الحساب الشهري',
       'ar': '',
@@ -788,6 +732,58 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': 'تفعيل',
       'ar': '',
     },
+    '2xx3xf7w': {
+      'fr': 'المداخيل',
+      'ar': '',
+    },
+    'cbivh4w6': {
+      'fr': 'اضافة مداخيل',
+      'ar': '',
+    },
+    'mfnc0guy': {
+      'fr': 'عدد تحويلات الودائع',
+      'ar': '',
+    },
+    'o5xue3m1': {
+      'fr': 'مجموع الودائع',
+      'ar': '',
+    },
+    'itpe74ya': {
+      'fr': 'اضافة الوثيقة',
+      'ar': '',
+    },
+    '6lp0yzmr': {
+      'fr': ' الوثيقة',
+      'ar': '',
+    },
+    'f846zsii': {
+      'fr': 'المصاريف',
+      'ar': '',
+    },
+    'zexh1ht4': {
+      'fr': 'اضافة مصاريف',
+      'ar': '',
+    },
+    '2vodlxer': {
+      'fr': 'عدد عمليات السحب',
+      'ar': '',
+    },
+    '5f035eml': {
+      'fr': '15/26',
+      'ar': '',
+    },
+    'j0ghsdo9': {
+      'fr': 'إجمالي المصاريف',
+      'ar': '',
+    },
+    '5tspx2oq': {
+      'fr': 'اضافة الوثيقة',
+      'ar': '',
+    },
+    '0kg906sp': {
+      'fr': ' الوثيقة',
+      'ar': '',
+    },
     'ytv0bwlp': {
       'fr': '•',
       'ar': '',
@@ -862,7 +858,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': 'مبلغ الاشتراك',
       'ar': '',
     },
-    'qtpym5qw': {
+    'cxma5nab': {
       'fr': 'عودة',
       'ar': '',
     },
@@ -2270,6 +2266,10 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     '0d5eqbtk': {
       'fr': 'الملاحظة',
+      'ar': '',
+    },
+    'i1gb0ott': {
+      'fr': '',
       'ar': '',
     },
     '7b07af3w': {
