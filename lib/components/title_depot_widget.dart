@@ -476,6 +476,23 @@ class _TitleDepotWidgetState extends State<TitleDepotWidget> {
                                                       .secondaryText,
                                               size: 18.0,
                                             ),
+                                            InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                await listViewPortDepotRecord
+                                                    .reference
+                                                    .delete();
+                                              },
+                                              child: Icon(
+                                                Icons.delete_forever,
+                                                color: Color(0xFFFF1900),
+                                                size: 40.0,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),

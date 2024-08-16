@@ -390,7 +390,7 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
                 highlightColor: Colors.transparent,
                 onTap: () async {
                   context.pushNamed(
-                    'DepotWithdrawal',
+                    'Profile',
                     extra: <String, dynamic>{
                       kTransitionInfoKey: TransitionInfo(
                         hasTransition: true,
