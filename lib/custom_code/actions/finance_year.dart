@@ -53,32 +53,18 @@ Future financeYear(
     final arabicFont = pw.Font.ttf(fontData.buffer.asByteData());
 
     final monthNames = [
-      'يناير',
-      'فبراير',
+      'جانفي',
+      'فيفري',
       'مارس',
-      'أبريل',
-      'مايو',
-      'يونيو',
-      'يوليو',
-      'أغسطس',
+      'أفريل',
+      'ماي',
+      'جوان',
+      'جويلية',
+      'أوت',
       'سبتمبر',
       'أكتوبر',
       'نوفمبر',
       'ديسمبر'
-    ];
-    final monthNamesFR = [
-      'Janvier',
-      'Février',
-      'Mars',
-      'Avril',
-      'Mai',
-      'Juin',
-      'Juillet',
-      'Août',
-      'Septembre',
-      'Octobre',
-      'Novembre',
-      'Décembre'
     ];
 
     // Helper function to calculate monthly sums
@@ -87,197 +73,265 @@ Future financeYear(
       String titre,
       String monthNumber,
     ) {
-      return records
-              ?.where((record) =>
-                  (record.titreString == titre) &&
-                  (record.mois == monthNumber) &&
-                  (DateTime.parse(record.date!).year.toString() == year))
-              .fold<double>(0, (prev, record) => prev + record.montant) ??
+      return records?.where((record) {
+            DateTime recordDate;
+            if (record.date is String) {
+              recordDate = DateTime.parse(record.date as String);
+            } else if (record.date is DateTime) {
+              recordDate = record.date as DateTime;
+            } else {
+              return false;
+            }
+
+            return (record.titreString == titre) &&
+                (record.mois == monthNumber) &&
+                (recordDate.year.toString() == year);
+          }).fold<double>(0, (prev, record) => prev + record.montant) ??
           0;
     }
 
-    pdf.addPage(pw.Page(
-      pageFormat: PdfPageFormat.a4,
+    // Calculate yearly totals
+    double totalDepot = 0;
+    double totalWithdrawal = 0;
+    final List<double> monthlyDepotTotals = List.generate(12, (_) => 0);
+    final List<double> monthlyWithdrawalTotals = List.generate(12, (_) => 0);
+
+    pdf.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4.landscape,
       build: (pw.Context context) {
-        return pw.Directionality(
-          textDirection: pw.TextDirection.rtl,
-          child: pw.Column(
-            children: [
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [
-                  pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text('ولاية قبلي',
-                          style: pw.TextStyle(font: arabicFont, fontSize: 10)),
-                      pw.Text('معتمدية دوز الشمالية',
-                          style: pw.TextStyle(font: arabicFont, fontSize: 10)),
-                      pw.Text('جمعية التنمية الوفاء',
-                          style: pw.TextStyle(font: arabicFont, fontSize: 10)),
-                    ],
-                  ),
-                  pw.Image(logoImage, width: 100, height: 100),
-                  pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.end,
-                    children: [
-                      pw.Text('Gouvernorat de Kébili',
-                          style: pw.TextStyle(fontSize: 10)),
-                      pw.Text('Délégation Douz Nord',
-                          style: pw.TextStyle(fontSize: 10)),
-                      pw.Text('Association de développement ElWafa',
-                          style: pw.TextStyle(fontSize: 10)),
-                    ],
-                  ),
-                ],
-              ),
-              pw.SizedBox(height: 20),
-              pw.Text('الحساب السنوي لسنة $year',
-                  style: pw.TextStyle(font: arabicFont, fontSize: 16)),
-              pw.Text('Bilan annuel de l\'année $year',
-                  style: pw.TextStyle(fontSize: 16)),
-              pw.SizedBox(height: 20),
-              pw.Text('جدول الإيداعات',
-                  style: pw.TextStyle(font: arabicFont, fontSize: 12)),
-              pw.Table(
-                border: pw.TableBorder.all(),
-                children: [
-                  pw.TableRow(children: [
-                    pw.Padding(
-                        padding: pw.EdgeInsets.all(8),
-                        child: pw.Text('العنوان',
-                            textAlign: pw.TextAlign.center,
-                            style: pw.TextStyle(font: arabicFont))),
-                    ...monthNames
-                        .map(
-                          (month) => pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(month,
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                        )
-                        .toList(),
-                  ]),
-                  ...?depotTitles?.map((title) {
-                    final monthlySums = List.generate(12, (index) {
-                      final monthNumber = (index + 1).toString();
-                      final sum =
-                          calculateMonthlySum(depots, title.name!, monthNumber);
-                      return pw.Text(sum.toString(),
-                          textAlign: pw.TextAlign.center,
-                          style: pw.TextStyle(font: arabicFont));
-                    });
-
-                    return pw.TableRow(children: [
-                      pw.Padding(
-                          padding: pw.EdgeInsets.all(8),
-                          child: pw.Text(title.name ?? '',
-                              textAlign: pw.TextAlign.center,
-                              style: pw.TextStyle(font: arabicFont))),
-                      ...monthlySums,
-                    ]);
-                  }).toList(),
-                  pw.TableRow(children: [
-                    pw.Padding(
-                        padding: pw.EdgeInsets.all(8),
-                        child: pw.Text('المجموع',
-                            textAlign: pw.TextAlign.center,
-                            style: pw.TextStyle(font: arabicFont))),
-                    ...List.generate(12, (index) {
-                      final monthNumber = (index + 1).toString();
-                      final sum =
-                          calculateMonthlySum(depots, 'all', monthNumber);
-                      return pw.Text(sum.toString(),
-                          textAlign: pw.TextAlign.center,
-                          style: pw.TextStyle(font: arabicFont));
-                    }),
-                  ]),
-                ],
-              ),
-              pw.SizedBox(height: 20),
-              pw.Text('جدول السحوبات',
-                  style: pw.TextStyle(font: arabicFont, fontSize: 12)),
-              pw.Table(
-                border: pw.TableBorder.all(),
-                children: [
-                  pw.TableRow(children: [
-                    pw.Padding(
-                        padding: pw.EdgeInsets.all(8),
-                        child: pw.Text('العنوان',
-                            textAlign: pw.TextAlign.center,
-                            style: pw.TextStyle(font: arabicFont))),
-                    ...monthNames
-                        .map(
-                          (month) => pw.Padding(
-                              padding: pw.EdgeInsets.all(8),
-                              child: pw.Text(month,
-                                  textAlign: pw.TextAlign.center,
-                                  style: pw.TextStyle(font: arabicFont))),
-                        )
-                        .toList(),
-                  ]),
-                  ...?withdrawaltitles?.map((title) {
-                    final monthlySums = List.generate(12, (index) {
-                      final monthNumber = (index + 1).toString();
-                      final sum = calculateMonthlySum(
-                          withdrawals, title.name!, monthNumber);
-                      return pw.Text(sum.toString(),
-                          textAlign: pw.TextAlign.center,
-                          style: pw.TextStyle(font: arabicFont));
-                    });
-
-                    return pw.TableRow(children: [
-                      pw.Padding(
-                          padding: pw.EdgeInsets.all(8),
-                          child: pw.Text(title.name ?? '',
-                              textAlign: pw.TextAlign.center,
-                              style: pw.TextStyle(font: arabicFont))),
-                      ...monthlySums,
-                    ]);
-                  }).toList(),
-                  pw.TableRow(children: [
-                    pw.Padding(
-                        padding: pw.EdgeInsets.all(8),
-                        child: pw.Text('المجموع',
-                            textAlign: pw.TextAlign.center,
-                            style: pw.TextStyle(font: arabicFont))),
-                    ...List.generate(12, (index) {
-                      final monthNumber = (index + 1).toString();
-                      final sum =
-                          calculateMonthlySum(withdrawals, 'all', monthNumber);
-                      return pw.Text(sum.toString(),
-                          textAlign: pw.TextAlign.center,
-                          style: pw.TextStyle(font: arabicFont));
-                    }),
-                  ]),
-                ],
-              ),
-              pw.SizedBox(height: 20),
-              pw.Align(
-                alignment: pw.Alignment.bottomRight,
-                child: pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+        return [
+          pw.Directionality(
+            textDirection: pw.TextDirection.rtl,
+            child: pw.Column(
+              children: [
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
-                    pw.Text('امضاء المدير التنفيذي',
-                        style: pw.TextStyle(font: arabicFont, fontSize: 10)),
-                    pw.Text('معز بنعمر',
-                        style: pw.TextStyle(font: arabicFont, fontSize: 12)),
-                    pw.SizedBox(height: 10),
-                    pw.Text('امين المال',
-                        style: pw.TextStyle(font: arabicFont, fontSize: 10)),
-                    pw.Text('الفاضل بنبلقاسم',
-                        style: pw.TextStyle(font: arabicFont, fontSize: 12)),
-                    pw.SizedBox(height: 10),
-                    pw.Text('رئيس الجمعية',
-                        style: pw.TextStyle(font: arabicFont, fontSize: 10)),
-                    pw.Text('نبيل بنعبد النور',
-                        style: pw.TextStyle(font: arabicFont, fontSize: 12)),
+                    pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Text('ولاية قبلي',
+                            style:
+                                pw.TextStyle(font: arabicFont, fontSize: 10)),
+                        pw.Text('معتمدية دوز الشمالية',
+                            style:
+                                pw.TextStyle(font: arabicFont, fontSize: 10)),
+                        pw.Text('جمعية التنمية الوفاء',
+                            style:
+                                pw.TextStyle(font: arabicFont, fontSize: 10)),
+                      ],
+                    ),
+                    pw.Image(logoImage, width: 100, height: 100),
+                    pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.end,
+                      children: [
+                        pw.Text('Gouvernorat de Kébili',
+                            style: pw.TextStyle(fontSize: 10)),
+                        pw.Text('Délégation Douz Nord',
+                            style: pw.TextStyle(fontSize: 10)),
+                        pw.Text('Association de développement ElWafa',
+                            style: pw.TextStyle(fontSize: 10)),
+                      ],
+                    ),
                   ],
                 ),
-              ),
-            ],
+                pw.SizedBox(height: 20),
+                pw.Text('الحساب السنوي لسنة $year',
+                    style: pw.TextStyle(font: arabicFont, fontSize: 16)),
+                pw.Text('Bilan annuel de l\'année $year',
+                    style: pw.TextStyle(fontSize: 16)),
+                pw.SizedBox(height: 20),
+
+                // Title for Incomes (المداخيل)
+                pw.Text('المداخيل',
+                    style: pw.TextStyle(font: arabicFont, fontSize: 14)),
+                pw.Table(
+                  border: pw.TableBorder.all(),
+                  children: [
+                    pw.TableRow(children: [
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text('العنوان',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      ...monthNames
+                          .map(
+                            (month) => pw.Padding(
+                                padding: pw.EdgeInsets.all(8),
+                                child: pw.Text(month,
+                                    textAlign: pw.TextAlign.center,
+                                    style: pw.TextStyle(font: arabicFont))),
+                          )
+                          .toList(),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text('المجموع السنوي',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                    ]),
+                    ...?depotTitles?.map((title) {
+                      final monthlySums = List.generate(12, (index) {
+                        final monthNumber = (index + 1).toString();
+                        final sum = calculateMonthlySum(
+                            depots, title.name!, monthNumber);
+                        monthlyDepotTotals[index] += sum;
+                        totalDepot += sum;
+                        return sum;
+                      });
+
+                      return pw.TableRow(children: [
+                        pw.Padding(
+                            padding: pw.EdgeInsets.all(8),
+                            child: pw.Text(title.name ?? '',
+                                textAlign: pw.TextAlign.center,
+                                style: pw.TextStyle(font: arabicFont))),
+                        ...monthlySums.map((sum) => pw.Padding(
+                              padding: pw.EdgeInsets.all(8),
+                              child: pw.Text(sum.toString(),
+                                  textAlign: pw.TextAlign.center,
+                                  style: pw.TextStyle(font: arabicFont)),
+                            )),
+                        pw.Padding(
+                            padding: pw.EdgeInsets.all(8),
+                            child: pw.Text(
+                                monthlySums.reduce((a, b) => a + b).toString(),
+                                textAlign: pw.TextAlign.center,
+                                style: pw.TextStyle(font: arabicFont))),
+                      ]);
+                    }).toList(),
+                    pw.TableRow(children: [
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text('المجموع',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      ...monthlyDepotTotals.map((sum) => pw.Padding(
+                            padding: pw.EdgeInsets.all(8),
+                            child: pw.Text(sum.toString(),
+                                textAlign: pw.TextAlign.center,
+                                style: pw.TextStyle(font: arabicFont)),
+                          )),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(totalDepot.toString(),
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                    ]),
+                  ],
+                ),
+                pw.SizedBox(height: 20),
+
+                // Title for Expenses (المصاريف)
+                pw.Text('المصاريف',
+                    style: pw.TextStyle(font: arabicFont, fontSize: 14)),
+                pw.Table(
+                  border: pw.TableBorder.all(),
+                  children: [
+                    pw.TableRow(children: [
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text('العنوان',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      ...monthNames
+                          .map(
+                            (month) => pw.Padding(
+                                padding: pw.EdgeInsets.all(8),
+                                child: pw.Text(month,
+                                    textAlign: pw.TextAlign.center,
+                                    style: pw.TextStyle(font: arabicFont))),
+                          )
+                          .toList(),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text('المجموع السنوي',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                    ]),
+                    ...?withdrawaltitles?.map((title) {
+                      final monthlySums = List.generate(12, (index) {
+                        final monthNumber = (index + 1).toString();
+                        final sum = calculateMonthlySum(
+                            withdrawals, title.name!, monthNumber);
+                        monthlyWithdrawalTotals[index] += sum;
+                        totalWithdrawal += sum;
+                        return sum;
+                      });
+
+                      return pw.TableRow(children: [
+                        pw.Padding(
+                            padding: pw.EdgeInsets.all(8),
+                            child: pw.Text(title.name ?? '',
+                                textAlign: pw.TextAlign.center,
+                                style: pw.TextStyle(font: arabicFont))),
+                        ...monthlySums.map((sum) => pw.Padding(
+                              padding: pw.EdgeInsets.all(8),
+                              child: pw.Text(sum.toString(),
+                                  textAlign: pw.TextAlign.center,
+                                  style: pw.TextStyle(font: arabicFont)),
+                            )),
+                        pw.Padding(
+                            padding: pw.EdgeInsets.all(8),
+                            child: pw.Text(
+                                monthlySums.reduce((a, b) => a + b).toString(),
+                                textAlign: pw.TextAlign.center,
+                                style: pw.TextStyle(font: arabicFont))),
+                      ]);
+                    }).toList(),
+                    pw.TableRow(children: [
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text('المجموع',
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                      ...monthlyWithdrawalTotals.map((sum) => pw.Padding(
+                            padding: pw.EdgeInsets.all(8),
+                            child: pw.Text(sum.toString(),
+                                textAlign: pw.TextAlign.center,
+                                style: pw.TextStyle(font: arabicFont)),
+                          )),
+                      pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(totalWithdrawal.toString(),
+                              textAlign: pw.TextAlign.center,
+                              style: pw.TextStyle(font: arabicFont))),
+                    ]),
+                  ],
+                ),
+                pw.SizedBox(height: 20),
+
+                // Yearly Result
+                pw.Text('النتيجة السنوية: ${totalDepot - totalWithdrawal}',
+                    style: pw.TextStyle(font: arabicFont, fontSize: 14)),
+                pw.SizedBox(height: 10),
+
+                // Signatures
+                pw.Align(
+                  alignment: pw.Alignment.bottomRight,
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('امضاء المدير التنفيذي',
+                          style: pw.TextStyle(font: arabicFont, fontSize: 10)),
+                      pw.Text('معز بنعمر',
+                          style: pw.TextStyle(font: arabicFont, fontSize: 12)),
+                      pw.SizedBox(height: 10),
+                      pw.Text('امين المال',
+                          style: pw.TextStyle(font: arabicFont, fontSize: 10)),
+                      pw.Text('الفاضل بنبلقاسم',
+                          style: pw.TextStyle(font: arabicFont, fontSize: 12)),
+                      pw.SizedBox(height: 10),
+                      pw.Text('رئيس الجمعية',
+                          style: pw.TextStyle(font: arabicFont, fontSize: 10)),
+                      pw.Text('نبيل بنعبد النور',
+                          style: pw.TextStyle(font: arabicFont, fontSize: 12)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        );
+        ];
       },
     ));
 

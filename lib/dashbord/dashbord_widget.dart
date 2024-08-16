@@ -406,7 +406,7 @@ class _DashbordWidgetState extends State<DashbordWidget> {
                                         children: [
                                           Container(
                                             width: double.infinity,
-                                            height: 478.0,
+                                            height: 453.0,
                                             decoration: BoxDecoration(),
                                             child:
                                                 StreamBuilder<List<ChatRecord>>(
@@ -809,7 +809,9 @@ class _DashbordWidgetState extends State<DashbordWidget> {
                                               },
                                             ),
                                           ),
-                                        ],
+                                        ]
+                                            .addToStart(SizedBox(height: 20.0))
+                                            .addToEnd(SizedBox(height: 20.0)),
                                       ),
                                     ],
                                   ),
@@ -823,7 +825,7 @@ class _DashbordWidgetState extends State<DashbordWidget> {
                                   ),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 5.0, 0.0, 30.0),
+                                        0.0, 20.0, 0.0, 30.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -839,6 +841,19 @@ class _DashbordWidgetState extends State<DashbordWidget> {
                                                     _model.textController,
                                                 focusNode:
                                                     _model.textFieldFocusNode,
+                                                onFieldSubmitted: (_) async {
+                                                  await ChatRecord.collection
+                                                      .doc()
+                                                      .set(createChatRecordData(
+                                                        user:
+                                                            currentUserReference,
+                                                        date:
+                                                            getCurrentTimestamp,
+                                                        message: _model
+                                                            .textController
+                                                            .text,
+                                                      ));
+                                                },
                                                 autofocus: false,
                                                 obscureText: false,
                                                 decoration: InputDecoration(
